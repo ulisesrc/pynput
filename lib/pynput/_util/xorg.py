@@ -455,7 +455,10 @@ class ListenerMixin(object):
         while data and len(data):
             event, data = self._EVENT_PARSER.parse_binary_value(
                 data, self._display_record.display, None, None)
-            self._handle(self._display_stop, event)
+
+            # TODO: Find a way to correctly set this value
+            injected = False
+            self._handle(self._display_stop, event, injected)
 
     def _initialize(self, display):
         """Initialises this listener.
@@ -467,7 +470,7 @@ class ListenerMixin(object):
         """
         pass
 
-    def _handle(self, display, event):
+    def _handle(self, display, event, injected):
         """The device specific callback handler.
 
         This method calls the appropriate callback registered when this
@@ -476,5 +479,7 @@ class ListenerMixin(object):
         :param display: The display being used.
 
         :param event: The event.
+
+        :param bool injected: Whether the event was injected.
         """
         pass
